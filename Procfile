@@ -1,0 +1,1 @@
+web: gunicorn perpusapp.wsgi
