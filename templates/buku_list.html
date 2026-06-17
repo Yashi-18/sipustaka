@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="flex justify-between items-center mb-10">
+    <div>
+        <p class="text-sm text-slate-400">Kelola data buku SIPUSTAKA.</p>
+        <h1 class="text-2xl font-bold text-slate-800">Daftar Buku</h1>
+    </div>
+
+    <a href="{% url 'buku_tambah' %}"
+       class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition flex items-center gap-2 shadow-md shadow-blue-200">
+        <span class="material-icons-outlined text-sm">add</span>
+        Tambah Buku
+    </a>
+</div>
+
+<!-- TABLE CARD -->
+<div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="text-slate-400 text-[11px] uppercase tracking-widest border-b border-slate-50">
+                    <th class="px-8 py-6 font-bold">ID</th>
+                    <th class="px-6 py-6 font-bold">Judul</th>
+                    <th class="px-6 py-6 font-bold">Pengarang</th>
+                    <th class="px-6 py-6 font-bold">Kategori</th>
+                    <th class="px-6 py-6 font-bold">Penerbit</th>
+                    <th class="px-6 py-6 font-bold">Tahun</th>
+                    <th class="px-6 py-6 font-bold">Rak</th>
+                    <th class="px-6 py-6 font-bold">Stok</th>
+                    <th class="px-6 py-6 text-center font-bold">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm text-slate-600">
+                {% for b in buku %}
+                <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition">
+                    <td class="px-8 py-5 text-slate-400">{{ forloop.counter }}</td>
+                    <td class="px-6 py-5 font-semibold text-slate-800">{{ b.judul }}</td>
+                    <td class="px-6 py-5">{{ b.pengarang }}</td>
+                    <td class="px-6 py-5 text-slate-400">{{ b.kategori }}</td>
+                    <td class="px-6 py-5 text-slate-400">{{ b.penerbit }}</td>
+                    <td class="px-6 py-5 text-slate-400">{{ b.tahun|default:"2024" }}</td>
+                    <td class="px-6 py-5 text-slate-400">{{ b.rak }}</td>
+                    <td class="px-6 py-5 font-bold">{{ b.stok }}</td>
+                    
+                    <td class="px-6 py-5">
+                        <div class="flex items-center justify-center gap-3">
+                            <!-- Detail Link -->
+                            <a href="{% url 'buku_detail' b.id %}" class="text-slate-400 hover:text-blue-600 font-medium">Detail</a>
+                            
+                            <!-- Edit Button (Pill Blue) -->
+                            <a href="{% url 'buku_edit' b.id %}" 
+                               class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-blue-700 transition shadow-sm">
+                                Edit
+                            </a>
+
+                            <!-- Hapus Button (Pill Red) -->
+                            <a href="{% url 'buku_hapus' b.id %}" 
+                               onclick="return confirm('Hapus buku ini?')"
+                               class="bg-rose-500 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-rose-600 transition shadow-sm">
+                                Hapus
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="py-20 text-center text-slate-300">
+                        <span class="material-icons-outlined text-6xl block mb-4">inventory</span>
+                        Belum ada data buku.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

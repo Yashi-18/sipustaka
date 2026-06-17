@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - SIPUSTAKA{% endblock %}
+
+{% block content %}
+<!-- HEADER (Kecil & Bersih sesuai gambar) -->
+<div class="mb-8">
+    <p class="text-slate-400 text-sm font-medium">Dashboard Perpustakaan</p>
+    <h1 class="text-3xl font-bold text-slate-800 mt-1">Ringkasan Sistem</h1>
+</div>
+
+<!-- STATS CARDS (4 Kolom dengan Gap Pas) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    
+    <!-- Total Buku -->
+    <div class="bg-white rounded-[2rem] p-7 shadow-sm border border-slate-100 relative">
+        <p class="text-slate-400 text-sm font-medium">Total Buku</p>
+        <h2 class="text-4xl font-bold text-slate-900 mt-3">{{ total_buku }}</h2>
+        <p class="text-slate-400 text-[11px] mt-4">Keseluruhan unit buku tersedia.</p>
+        <div class="absolute top-7 right-7 text-blue-500 opacity-70">
+            <span class="material-icons-outlined text-2xl">inventory_2</span>
+        </div>
+    </div>
+
+    <!-- Total Judul -->
+    <div class="bg-white rounded-[2rem] p-7 shadow-sm border border-slate-100 relative">
+        <p class="text-slate-400 text-sm font-medium">Total Judul</p>
+        <h2 class="text-4xl font-bold text-slate-900 mt-3">{{ total_judul }}</h2>
+        <p class="text-slate-400 text-[11px] mt-4">Jumlah koleksi judul buku.</p>
+        <div class="absolute top-7 right-7 text-indigo-500 opacity-70">
+            <span class="material-icons-outlined text-2xl">menu_book</span>
+        </div>
+    </div>
+
+    <!-- Sedang Dipinjam -->
+    <div class="bg-white rounded-[2rem] p-7 shadow-sm border border-slate-100 relative">
+        <p class="text-slate-400 text-sm font-medium">Sedang Dipinjam</p>
+        <h2 class="text-4xl font-bold text-slate-900 mt-3">{{ total_dipinjam }}</h2>
+        <p class="text-slate-400 text-[11px] mt-4">Transaksi peminjaman aktif.</p>
+        <div class="absolute top-7 right-7 text-orange-400 opacity-70">
+            <span class="material-icons-outlined text-2xl">schedule</span>
+        </div>
+    </div>
+
+    <!-- Sudah Dikembalikan -->
+    <div class="bg-white rounded-[2rem] p-7 shadow-sm border border-slate-100 relative">
+        <p class="text-slate-400 text-sm font-medium">Sudah Dikembalikan</p>
+        <h2 class="text-4xl font-bold text-slate-900 mt-3">{{ total_kembali }}</h2>
+        <p class="text-slate-400 text-[11px] mt-4">Transaksi yang sudah selesai.</p>
+        <div class="absolute top-7 right-7 text-emerald-500 opacity-70">
+            <span class="material-icons-outlined text-2xl">task_alt</span>
+        </div>
+    </div>
+</div>
+
+<!-- PANEL BAWAH (2 Kolom) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- ANALISIS STOK -->
+    <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100">
+        <div class="mb-10">
+            <p class="text-slate-400 text-[11px] uppercase tracking-widest font-bold">Analisis Stok</p>
+            <h3 class="text-xl font-bold text-slate-800 mt-1">Distribusi Stok Buku</h3>
+        </div>
+
+        <div class="space-y-8">
+            {% for b in buku %}
+            <div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-sm font-semibold text-slate-600">{{ b.judul }}</span>
+                    <span class="text-sm font-bold text-blue-500">{{ b.stok }}</span>
+                </div>
+                <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <!-- Penyesuaian widthratio: b.stok / 20 * 100 -->
+                    <div class="h-full bg-blue-500 rounded-full transition-all duration-700" 
+                         style="width: {% widthratio b.stok 20 100 %}%">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- STATUS PEMINJAMAN -->
+    <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100">
+        <div class="mb-10">
+            <p class="text-slate-400 text-[11px] uppercase tracking-widest font-bold">Status Peminjaman</p>
+            <h3 class="text-xl font-bold text-slate-800 mt-1">Ringkasan Transaksi</h3>
+        </div>
+
+        <!-- Sedang Dipinjam -->
+        <div class="mb-10">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-sm font-semibold text-slate-600">Sedang Dipinjam</span>
+                <span class="text-sm font-bold text-orange-400">{{ total_dipinjam }}</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-orange-400 rounded-full" style="width: 75%"></div>
+            </div>
+        </div>
+
+        <!-- Sudah Dikembalikan -->
+        <div>
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-sm font-semibold text-slate-600">Sudah Dikembalikan</span>
+                <span class="text-sm font-bold text-emerald-500">{{ total_kembali }}</span>
+            </div>
+            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-400 rounded-full" style="width: 25%"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

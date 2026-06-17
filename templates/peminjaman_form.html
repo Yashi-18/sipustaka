@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="mb-8">
+
+    <p class="text-sm text-gray-500">
+        Kelola Peminjaman
+    </p>
+
+    <div class="flex items-center gap-3">
+
+        <a href="{% url 'peminjaman_list' %}"
+           class="text-gray-500 hover:text-gray-700">
+
+            <span class="material-icons-outlined">
+                arrow_back
+            </span>
+
+        </a>
+
+        <h2 class="text-3xl font-bold text-gray-900">
+            Buat Peminjaman
+        </h2>
+
+    </div>
+
+</div>
+
+<div class="bg-white rounded-[28px] p-8 shadow-sm max-w-5xl">
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <div>
+
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Pilih Siswa
+                </label>
+
+                <select
+                    name="siswa_id"
+                    required
+                    class="w-full rounded-2xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    {% for s in siswa %}
+                    <option value="{{ s.id }}">
+                        {{ s.nama }} - {{ s.nis }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div>
+
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Pilih Buku
+                </label>
+
+                <select
+                    name="buku_id"
+                    required
+                    class="w-full rounded-2xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                    {% for b in buku %}
+                    <option value="{{ b.id }}">
+                        {{ b.judul }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div>
+
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Tanggal Pinjam
+                </label>
+
+                <input
+                    type="date"
+                    name="tanggal_pinjam"
+                    required
+                    class="w-full rounded-2xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            </div>
+
+            <div>
+
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Jatuh Tempo
+                </label>
+
+                <input
+                    type="date"
+                    name="jatuh_tempo"
+                    required
+                    class="w-full rounded-2xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+            </div>
+
+        </div>
+
+        <div class="mt-6">
+
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Keperluan
+            </label>
+
+            <textarea
+                name="keperluan"
+                rows="4"
+                required
+                class="w-full rounded-2xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+
+        </div>
+
+        <div class="mt-6">
+
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Status
+            </label>
+
+            <select
+                name="status"
+                class="w-full rounded-2xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                <option value="Dipinjam">
+                    Dipinjam
+                </option>
+
+                <option value="Dikembalikan">
+                    Dikembalikan
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="flex gap-3 mt-8">
+
+            <button
+                type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-medium transition">
+
+                <span class="material-icons-outlined align-middle text-[18px]">
+                    save
+                </span>
+
+                Simpan
+
+            </button>
+
+            <a href="{% url 'peminjaman_list' %}"
+               class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-2xl font-medium transition">
+
+                Batal
+
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

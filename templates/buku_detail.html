@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="mb-8 flex justify-between items-center">
+        <div>
+            <p class="text-sm text-gray-500">
+                Detail Buku
+            </p>
+
+            <h1 class="text-4xl font-bold text-gray-900 mt-1">
+                {{ buku.judul }}
+            </h1>
+
+            <p class="text-gray-500 mt-2">
+                Informasi lengkap koleksi perpustakaan
+            </p>
+        </div>
+
+        <div class="flex gap-3">
+
+            <a href="{% url 'buku_edit' buku.id %}"
+            class="px-5 py-3 bg-blue-600 text-white rounded-2xl hover:bg-blue-700 transition">
+                Edit Buku
+            </a>
+
+            <a href="{% url 'buku_list' %}"
+            class="px-5 py-3 bg-gray-200 rounded-2xl hover:bg-gray-300 transition">
+                Kembali
+            </a>
+
+        </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- KONTEN UTAMA -->
+        <div class="lg:col-span-2 space-y-6">
+
+            <div class="bg-white rounded-3xl p-8 shadow-sm">
+
+                <div class="flex items-center justify-between mb-8">
+
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            Judul Buku
+                        </p>
+
+                        <h2 class="text-3xl font-bold mt-2">
+                            {{ buku.judul }}
+                        </h2>
+                    </div>
+
+                    {% if buku.stok > 5 %}
+                    <span class="px-4 py-2 rounded-full bg-green-100 text-green-700 font-medium">
+                        Stok Aman
+                    </span>
+                    {% else %}
+                    <span class="px-4 py-2 rounded-full bg-red-100 text-red-700 font-medium">
+                        Stok Menipis
+                    </span>
+                    {% endif %}
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    <div class="bg-slate-50 rounded-2xl p-5">
+                        <p class="text-gray-400 text-sm">
+                            Pengarang
+                        </p>
+
+                        <h3 class="font-bold text-lg mt-2">
+                            {{ buku.pengarang }}
+                        </h3>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-2xl p-5">
+                        <p class="text-gray-400 text-sm">
+                            Kategori
+                        </p>
+
+                        <h3 class="font-bold text-lg mt-2">
+                            {{ buku.kategori }}
+                        </h3>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-2xl p-5">
+                        <p class="text-gray-400 text-sm">
+                            Penerbit
+                        </p>
+
+                        <h3 class="font-bold text-lg mt-2">
+                            {{ buku.penerbit }}
+                        </h3>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-2xl p-5">
+                        <p class="text-gray-400 text-sm">
+                            Tahun Terbit
+                        </p>
+
+                        <h3 class="font-bold text-lg mt-2">
+                            {{ buku.tahun_terbit }}
+                        </h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 shadow-sm">
+
+                <h3 class="text-xl font-bold mb-4">
+                    Deskripsi Buku
+                </h3>
+
+                <p class="text-gray-600 leading-relaxed">
+                    {{ buku.deskripsi }}
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div>
+
+            <div class="bg-white rounded-3xl p-8 shadow-sm sticky top-8">
+
+                <h3 class="font-bold text-lg mb-5">
+                    Statistik Buku
+                </h3>
+
+                <div class="space-y-6">
+
+                    <div>
+                        <p class="text-gray-400 text-sm">
+                            Stok Tersedia
+                        </p>
+
+                        <h2 class="text-5xl font-bold text-blue-600 mt-2">
+                            {{ buku.stok }}
+                        </h2>
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400 text-sm">
+                            Lokasi Rak
+                        </p>
+
+                        <h3 class="text-xl font-semibold mt-2">
+                            {{ buku.rak }}
+                        </h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

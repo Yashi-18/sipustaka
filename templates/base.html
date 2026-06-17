@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SIPUSTAKA{% endblock %}</title>
+
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+    </style>
+</head>
+
+<body class="bg-[#eef2f7] overflow-hidden">
+
+<div class="flex h-screen">
+
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-[#020617] text-white flex flex-col border-r border-slate-800">
+
+        <!-- LOGO AREA (Sudah disesuaikan agar mirip gambar) -->
+        <div class="px-8 py-10">
+            <div class="flex items-center gap-4">
+                <!-- Logo Bulat Biru -->
+                <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-2xl shadow-lg shadow-blue-600/40">
+                    Y
+                </div>
+
+                <div>
+                    <p class="text-[10px] uppercase tracking-[4px] text-slate-500 font-extrabold">
+                        SIPUSTAKA
+                    </p>
+                    <h1 class="text-[18px] font-bold leading-tight text-white mt-0.5">
+                        Sistem Peminjaman <br> Buku
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENU -->
+        <nav class="flex-1 px-4 space-y-2">
+            {% with current=request.resolver_match.url_name %}
+
+            <!-- Dashboard -->
+            <a href="{% url 'dashboard' %}"
+               class="flex items-center gap-4 px-5 py-3.5 rounded-2xl transition group
+               {% if current == 'dashboard' %} bg-[#0f172a] text-white {% else %} text-slate-400 hover:bg-[#0f172a] hover:text-white {% endif %}">
+                <span class="material-icons-outlined">dashboard</span>
+                <span class="font-medium">Dashboard</span>
+            </a>
+
+            <!-- Buku -->
+            <a href="{% url 'buku_list' %}"
+               class="flex items-center gap-4 px-5 py-3.5 rounded-2xl transition group
+               {% if 'buku' in current %} bg-[#0f172a] text-white {% else %} text-slate-400 hover:bg-[#0f172a] hover:text-white {% endif %}">
+                <span class="material-icons-outlined">menu_book</span>
+                <span class="font-medium">Buku</span>
+            </a>
+
+            <!-- Peminjaman -->
+            <a href="{% url 'peminjaman_list' %}"
+               class="flex items-center gap-4 px-5 py-3.5 rounded-2xl transition group
+               {% if 'peminjaman' in current %} bg-[#0f172a] text-white {% else %} text-slate-400 hover:bg-[#0f172a] hover:text-white {% endif %}">
+                <span class="material-icons-outlined">inventory_2</span>
+                <span class="font-medium">Peminjaman</span>
+            </a>
+
+            <!-- User -->
+            <a href="{% url 'siswa_list' %}"
+               class="flex items-center gap-4 px-5 py-3.5 rounded-2xl transition group
+               {% if 'siswa' in current %} bg-[#0f172a] text-white {% else %} text-slate-400 hover:bg-[#0f172a] hover:text-white {% endif %}">
+                <span class="material-icons-outlined">group</span>
+                <span class="font-medium">User</span>
+            </a>
+
+            {% endwith %}
+        </nav>
+
+        <!-- FOOTER (Admin Aktif) -->
+        <div class="p-6">
+            <div class="bg-[#08112b] rounded-[2rem] p-6">
+                <p class="text-[11px] uppercase tracking-wider text-slate-500 font-bold">Admin Aktif</p>
+                <p class="mt-2 font-bold text-white text-lg">Asashi Reiji</p>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 overflow-y-auto bg-[#eef2f7]">
+        <!-- Padding konten utama -->
+        <div class="p-12">
+            {% block content %}
+            <!-- Isi halaman dashboard/buku akan muncul di sini -->
+            {% endblock %}
+        </div>
+    </main>
+
+</div>
+
+</body>
+</html>

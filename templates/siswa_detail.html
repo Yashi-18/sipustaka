@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
+
+    <div>
+        <p class="text-sm text-gray-500">
+            Detail Siswa
+        </p>
+
+        <h1 class="text-4xl font-bold text-gray-900">
+            {{ siswa.nama }}
+        </h1>
+
+        <p class="text-gray-500 mt-1">
+            Informasi lengkap data siswa
+        </p>
+    </div>
+
+    <div class="flex gap-3">
+
+        <a href="{% url 'siswa_edit' siswa.id %}"
+           class="px-6 py-3 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 transition">
+
+            Edit Siswa
+
+        </a>
+
+        <a href="{% url 'siswa_list' %}"
+           class="px-6 py-3 rounded-2xl bg-gray-100 hover:bg-gray-200 transition">
+
+            Kembali
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- KARTU UTAMA -->
+    <div class="lg:col-span-2 bg-white rounded-3xl p-8 shadow-sm">
+
+        <div class="flex items-center justify-between mb-6">
+
+            <div>
+
+                <p class="text-gray-500 text-sm">
+                    Nama Siswa
+                </p>
+
+                <h2 class="text-3xl font-bold">
+                    {{ siswa.nama }}
+                </h2>
+
+            </div>
+
+            {% if siswa.is_active %}
+                <span class="px-4 py-2 rounded-full bg-green-100 text-green-700 font-medium">
+                    Siswa Aktif
+                </span>
+            {% else %}
+                <span class="px-4 py-2 rounded-full bg-red-100 text-red-700 font-medium">
+                    Tidak Aktif
+                </span>
+            {% endif %}
+
+        </div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+            <div class="bg-gray-50 rounded-2xl p-5">
+
+                <p class="text-gray-400 mb-2">
+                    NIS
+                </p>
+
+                <h3 class="text-2xl font-semibold">
+                    {{ siswa.nis }}
+                </h3>
+
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-5">
+
+                <p class="text-gray-400 mb-2">
+                    Kelas
+                </p>
+
+                <h3 class="text-2xl font-semibold">
+                    {{ siswa.kelas }}
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SIDEBAR -->
+    <div class="bg-white rounded-3xl p-8 shadow-sm">
+
+        <h3 class="font-bold text-2xl mb-6">
+            Statistik
+        </h3>
+
+        <div class="space-y-6">
+
+            <div>
+
+                <p class="text-gray-400">
+                    Status
+                </p>
+
+                {% if siswa.is_active %}
+                    <h4 class="text-green-600 text-3xl font-bold">
+                        Aktif
+                    </h4>
+                {% else %}
+                    <h4 class="text-red-600 text-3xl font-bold">
+                        Nonaktif
+                    </h4>
+                {% endif %}
+
+            </div>
+
+            <div>
+
+                <p class="text-gray-400">
+                    Kelas Saat Ini
+                </p>
+
+                <h4 class="text-xl font-semibold">
+                    {{ siswa.kelas }}
+                </h4>
+
+            </div>
+
+            <div>
+
+                <p class="text-gray-400">
+                    Nomor Induk
+                </p>
+
+                <h4 class="text-xl font-semibold">
+                    {{ siswa.nis }}
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

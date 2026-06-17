@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- HEADER -->
+<div class="flex justify-between items-center mb-10">
+    <div>
+        <p class="text-sm text-slate-400">Data siswa yang bisa meminjam buku.</p>
+        <h1 class="text-2xl font-bold text-slate-800">User</h1>
+    </div>
+
+    <a href="{% url 'siswa_tambah' %}"
+       class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold transition flex items-center gap-2 shadow-md shadow-blue-200">
+        <span class="material-icons-outlined text-sm">person_add</span>
+        Tambah User
+    </a>
+</div>
+
+<!-- TABLE CARD -->
+<div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="text-slate-400 text-[11px] uppercase tracking-widest border-b border-slate-50">
+                    <th class="px-8 py-6 font-bold">ID</th>
+                    <th class="px-6 py-6 font-bold">Nama</th>
+                    <th class="px-6 py-6 font-bold">Kelas</th>
+                    <th class="px-6 py-6 font-bold">NIS</th>
+                    <th class="px-6 py-6 font-bold">Status</th>
+                    <th class="px-6 py-6 text-center font-bold">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm text-slate-600">
+                {% for s in siswa %}
+                <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition">
+                    
+                    <td class="px-8 py-5 text-slate-400">{{ forloop.counter }}</td>
+                    
+                    <td class="px-6 py-5 font-semibold text-slate-800">{{ s.nama }}</td>
+
+                    <td class="px-6 py-5 text-slate-400">{{ s.kelas }}</td>
+                    
+                    <td class="px-6 py-5 font-mono text-slate-400">{{ s.nis }}</td>
+                    
+                    <td class="px-6 py-5">
+                        {% if s.is_active %}
+                        <span class="bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full text-xs font-bold">
+                            Aktif
+                        </span>
+                        {% else %}
+                        <span class="bg-slate-100 text-slate-400 px-3 py-1 rounded-full text-xs font-bold">
+                            Tidak Aktif
+                        </span>
+                        {% endif %}
+                    </td>
+
+                    <td class="px-6 py-5">
+                        <div class="flex items-center justify-center gap-3">
+                            
+                            <a href="{% url 'siswa_detail' s.id %}"
+                               class="bg-slate-100 text-slate-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-slate-200 transition">
+                                Detail
+                            </a>
+
+                            <a href="{% url 'siswa_edit' s.id %}" 
+                               class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-blue-700 transition shadow-sm">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'siswa_hapus' s.id %}" 
+                               onclick="return confirm('Hapus siswa ini?')"
+                               class="bg-rose-500 text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-rose-600 transition shadow-sm">
+                                Hapus
+                            </a>
+                        </div>
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="py-20 text-center text-slate-300">
+                        <span class="material-icons-outlined text-6xl block mb-4">group</span>
+                        Belum ada data siswa.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
